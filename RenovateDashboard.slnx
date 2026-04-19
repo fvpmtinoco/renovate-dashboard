@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RenovateDashboard.App/RenovateDashboard.App.csproj" />
+  </Folder>
+</Solution>
