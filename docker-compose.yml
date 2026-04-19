@@ -1,0 +1,13 @@
+services:
+  api:
+    build: ./src/RenovateDashboard.App
+    ports:
+      - "5000:8080"
+    env_file: .env
+
+  web:
+    build: ./src/RenovateDashboard.Web
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
