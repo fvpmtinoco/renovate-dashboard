@@ -1,2 +1,8 @@
 bin/
 obj/
+Dockerfile
+.dockerignore
+**/.vs/
+**/*.user
+**/*.suo
+**/Properties/launchSettings.json
