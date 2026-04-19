@@ -480,3 +480,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# ASP.NET machine-local launch profiles
+**/Properties/launchSettings.json
+
+# Frontend build output
+dist/
