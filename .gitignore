@@ -489,3 +489,6 @@ dist/
 
 # Local dev secrets — never commit
 appsettings.Development.json
+
+# Brainstorming session files
+.superpowers/
