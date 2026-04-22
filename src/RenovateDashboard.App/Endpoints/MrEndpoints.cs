@@ -1,4 +1,3 @@
-// src/RenovateDashboard.App/Endpoints/MrEndpoints.cs
 using RenovateDashboard.App.Services;
 
 namespace RenovateDashboard.App.Endpoints;
@@ -9,8 +8,8 @@ public static class MrEndpoints
     {
         app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 
-        app.MapGet("/api/mrs", async (GitLabService gitLab) =>
-            Results.Ok(await gitLab.GetRenovateMrsAsync()));
+        app.MapGet("/api/mrs", async (GitLabService gitLab, CancellationToken ct) =>
+            Results.Ok(await gitLab.GetRenovateMrsAsync(ct)));
 
         app.MapPost("/api/digest/send", async (DigestService digest) =>
         {
