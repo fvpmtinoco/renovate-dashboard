@@ -486,3 +486,6 @@ $RECYCLE.BIN/
 
 # Frontend build output
 dist/
+
+# Local dev secrets — never commit
+appsettings.Development.json
