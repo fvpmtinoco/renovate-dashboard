@@ -35,6 +35,10 @@ describe('filterGroups', () => {
     expect(filterGroups(groups, '')).toBe(groups)
   })
 
+  it('treats whitespace-only query as empty and returns original reference', () => {
+    expect(filterGroups(groups, '   ')).toBe(groups)
+  })
+
   it('matches by repo name and shows all MRs in that group', () => {
     const result = filterGroups(groups, 'api')
     expect(result.size).toBe(1)
@@ -59,5 +63,9 @@ describe('filterGroups', () => {
 describe('getRepoUrl', () => {
   it('strips the MR path from a GitLab web_url', () => {
     expect(getRepoUrl('https://gitlab.com/org/api/-/merge_requests/42')).toBe('https://gitlab.com/org/api')
+  })
+
+  it('returns the full URL unchanged when no /-/ segment is present', () => {
+    expect(getRepoUrl('https://gitlab.example.com/org/repo')).toBe('https://gitlab.example.com/org/repo')
   })
 })

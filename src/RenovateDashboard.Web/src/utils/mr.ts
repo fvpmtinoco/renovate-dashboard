@@ -29,5 +29,6 @@ export function filterGroups(
 }
 
 export function getRepoUrl(webUrl: string): string {
-  return webUrl.split('/-/')[0]
+  const idx = webUrl.indexOf('/-/')
+  return idx !== -1 ? webUrl.slice(0, idx) : webUrl
 }
