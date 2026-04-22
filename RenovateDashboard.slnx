@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/RenovateDashboard.App.Tests/RenovateDashboard.App.Tests.csproj" />
     <Project Path="src/RenovateDashboard.App/RenovateDashboard.App.csproj" />
   </Folder>
 </Solution>
