@@ -43,4 +43,8 @@ describe('relativeTime', () => {
   it('shows 1d ago at the day boundary', () => {
     expect(relativeTime('2026-04-21T12:00:00Z')).toBe('1d ago')
   })
+
+  it('returns "just now" for an invalid date string', () => {
+    expect(relativeTime('not-a-date')).toBe('just now')
+  })
 })

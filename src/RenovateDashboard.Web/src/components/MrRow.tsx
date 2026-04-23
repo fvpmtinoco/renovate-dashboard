@@ -20,13 +20,18 @@ function PipelineBadge({ status }: { status: string | null }) {
 }
 
 export function MrRow({ mr }: { mr: RenovateMrDto }) {
+  const open = () => window.open(mr.webUrl, '_blank', 'noopener,noreferrer')
   return (
     <tr
       className="border-t border-gray-100 hover:bg-gray-50 cursor-pointer"
-      onClick={() => window.open(mr.webUrl, '_blank', 'noopener,noreferrer')}
+      onClick={open}
+      onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && open()}
+      tabIndex={0}
+      role="link"
+      aria-label={mr.title}
     >
       <td className="px-4 py-2.5 font-medium text-gray-900">{mr.title}</td>
-      <td className="px-4 py-2.5 font-mono text-xs text-gray-500 max-w-[200px] truncate">
+      <td className="px-4 py-2.5 font-mono text-xs text-gray-500 truncate max-w-[200px]">
         {mr.sourceBranch}
       </td>
       <td className="px-4 py-2.5 text-gray-400 whitespace-nowrap text-sm">

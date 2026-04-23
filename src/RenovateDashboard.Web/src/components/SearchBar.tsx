@@ -6,10 +6,12 @@ interface Props {
 export function SearchBar({ value, onChange }: Props) {
   return (
     <div className="relative">
-      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+      <label htmlFor="mr-search" className="sr-only">Search MRs</label>
+      <span aria-hidden="true" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
         🔍
       </span>
       <input
+        id="mr-search"
         type="text"
         value={value}
         onChange={e => onChange(e.target.value)}
