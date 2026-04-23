@@ -27,7 +27,6 @@ export function MrRow({ mr }: { mr: RenovateMrDto }) {
       onClick={open}
       onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && open()}
       tabIndex={0}
-      role="link"
       aria-label={mr.title}
     >
       <td className="px-4 py-2.5 font-medium text-gray-900">{mr.title}</td>

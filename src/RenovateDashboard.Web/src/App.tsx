@@ -76,7 +76,7 @@ function App() {
               key={repo}
               repo={repo}
               mrs={repoMrs}
-              repoUrl={getRepoUrl(repoMrs[0]?.webUrl ?? '')}
+              repoUrl={getRepoUrl(repoMrs[0].webUrl)}
             />
           ))}
         </div>
