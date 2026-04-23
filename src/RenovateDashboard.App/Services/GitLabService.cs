@@ -1,6 +1,6 @@
+using Microsoft.Extensions.Options;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.Extensions.Options;
 
 namespace RenovateDashboard.App.Services;
 
@@ -42,10 +42,9 @@ public class GitLabService
             response.EnsureSuccessStatusCode();
 
             var mrs = await JsonSerializer.DeserializeAsync<List<GitLabMrResponse>>(
-                response.Content.ReadAsStream(), JsonOpts, ct) ?? [];
+                response.Content.ReadAsStream(ct), JsonOpts, ct) ?? [];
 
             return mrs
-                .Where(mr => mr.Title.StartsWith("chore(deps,renovate)", StringComparison.OrdinalIgnoreCase))
                 .Select(mr => new RenovateMrDto(
                     Repo: repo,
                     Iid: mr.Iid,
@@ -55,7 +54,7 @@ public class GitLabService
                     Author: mr.Author?.Name ?? "",
                     SourceBranch: mr.SourceBranch,
                     TargetBranch: mr.TargetBranch,
-                    PipelineStatus: mr.HeadPipeline?.Status
+                    PipelineStatus: mr.MergeStatus
                 ));
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
@@ -88,19 +87,13 @@ public class GitLabService
         [JsonPropertyName("target_branch")]
         public string TargetBranch { get; set; } = "";
 
-        [JsonPropertyName("head_pipeline")]
-        public GitLabPipeline? HeadPipeline { get; set; }
+        [JsonPropertyName("merge_status")]
+        public string MergeStatus { get; set; } = "";
     }
 
     private sealed class GitLabAuthor
     {
         [JsonPropertyName("name")]
         public string Name { get; set; } = "";
-    }
-
-    private sealed class GitLabPipeline
-    {
-        [JsonPropertyName("status")]
-        public string Status { get; set; } = "";
     }
 }
