@@ -12,7 +12,8 @@ function App() {
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    fetch('/api/mrs')
+    const controller = new AbortController()
+    fetch('/api/mrs', { signal: controller.signal })
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json() as Promise<RenovateMrDto[]>
@@ -21,7 +22,13 @@ function App() {
         setMrs(data)
         setStatus('done')
       })
-      .catch(() => setStatus('error'))
+      .catch(err => {
+        if ((err as Error).name !== 'AbortError') {
+          console.error('[renovate-dashboard] failed to fetch /api/mrs', err)
+          setStatus('error')
+        }
+      })
+    return () => controller.abort()
   }, [])
 
   const groups = useMemo(() => groupByRepo(mrs), [mrs])
@@ -69,7 +76,7 @@ function App() {
               key={repo}
               repo={repo}
               mrs={repoMrs}
-              repoUrl={getRepoUrl(repoMrs[0].webUrl)}
+              repoUrl={getRepoUrl(repoMrs[0]?.webUrl ?? '')}
             />
           ))}
         </div>
