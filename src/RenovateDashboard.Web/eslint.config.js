@@ -16,7 +16,7 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     rules: {
-      'react-refresh/only-export-components': ['warn', { extraHOCs: ['withAuthenticationRequired'] }],
+      'react-refresh/only-export-components': ['error', { allowConstantExport: true, extraHOCs: ['withAuthenticationRequired'] }],
     },
     languageOptions: {
       ecmaVersion: 2020,
