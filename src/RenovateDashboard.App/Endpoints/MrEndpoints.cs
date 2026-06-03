@@ -9,13 +9,14 @@ public static class MrEndpoints
         app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 
         app.MapGet("/api/mrs", async (GitLabService gitLab, CancellationToken ct) =>
-            Results.Ok(await gitLab.GetRenovateMrsAsync(ct)));
+            Results.Ok(await gitLab.GetRenovateMrsAsync(ct)))
+            .RequireAuthorization();
 
         app.MapPost("/api/digest/send", async (DigestService digest) =>
         {
             await digest.SendAsync();
             return Results.NoContent();
-        });
+        }).RequireAuthorization();
 
         return app;
     }
