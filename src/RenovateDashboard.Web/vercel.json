@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://renovate-dashboard.onrender.com/api/:path*" },
+    { "source": "/health", "destination": "https://renovate-dashboard.onrender.com/health" }
+  ]
+}
