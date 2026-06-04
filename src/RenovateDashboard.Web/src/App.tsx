@@ -101,10 +101,30 @@ function App() {
   )
 }
 
-export default withAuthenticationRequired(App, {
+const ProtectedApp = withAuthenticationRequired(App, {
   onRedirecting: () => (
     <div className="flex items-center justify-center min-h-screen text-gray-500">
       Redirecting to login…
     </div>
   ),
 })
+
+export default function AuthGate() {
+  const { error, logout } = useAuth0()
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen gap-3 text-center px-4">
+        <p className="text-red-600">{error.message}</p>
+        <button
+          onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+          className="text-sm text-gray-600 hover:text-gray-900 underline"
+        >
+          Log out and try another account
+        </button>
+      </div>
+    )
+  }
+
+  return <ProtectedApp />
+}
