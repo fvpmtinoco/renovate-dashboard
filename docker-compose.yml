@@ -12,9 +12,14 @@ services:
       retries: 5
       start_period: 20s
 
-  # Static files only — no env_file needed (no server-side runtime)
+  # Static files only — Auth0 values are baked in at build time via build args
   web:
-    build: ./src/RenovateDashboard.Web
+    build:
+      context: ./src/RenovateDashboard.Web
+      args:
+        VITE_AUTH0_DOMAIN: ${VITE_AUTH0_DOMAIN}
+        VITE_AUTH0_CLIENT_ID: ${VITE_AUTH0_CLIENT_ID}
+        VITE_AUTH0_AUDIENCE: ${VITE_AUTH0_AUDIENCE}
     ports:
       - "3000:80"
     restart: unless-stopped

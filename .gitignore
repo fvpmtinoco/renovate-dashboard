@@ -492,3 +492,5 @@ appsettings.Development.json
 
 # Brainstorming session files
 .superpowers/
+docs
+/.env

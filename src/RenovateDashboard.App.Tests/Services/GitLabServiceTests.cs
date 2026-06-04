@@ -1,8 +1,8 @@
-using System.Net;
-using System.Text.Json;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using RenovateDashboard.App.Services;
+using System.Net;
+using System.Text.Json;
 
 namespace RenovateDashboard.App.Tests.Services;
 
@@ -36,7 +36,11 @@ public class GitLabServiceTests
             new { iid = 2, title = "feat: unrelated MR", web_url = "https://gitlab.example.com/ns/repo/-/merge_requests/2", created_at = "2026-04-01T11:00:00Z", author = new { name = "dev" }, source_branch = "feat/x", target_branch = "main", head_pipeline = (object?)null }
         });
 
-        var service = CreateService("ns/repo", new() { [MrUrl("ns/repo")] = (HttpStatusCode.OK, body) });
+        var dict = new Dictionary<string, (HttpStatusCode, string)>
+        {
+            { MrUrl("ns/repo"), (HttpStatusCode.OK, body) }
+        };
+        var service = CreateService("ns/repo", dict);
 
         var result = (await service.GetRenovateMrsAsync()).ToList();
 
