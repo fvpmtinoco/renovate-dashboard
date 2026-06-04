@@ -4,23 +4,16 @@ using System.Text.Json.Serialization;
 
 namespace RenovateDashboard.App.Services;
 
-public class GitLabService
+public class GitLabService(HttpClient http, IOptions<GitLabOptions> options, ILogger<GitLabService> logger)
 {
-    private readonly HttpClient _http;
-    private readonly GitLabOptions _options;
-    private readonly ILogger<GitLabService> _logger;
+    private readonly HttpClient _http = http;
+    private readonly GitLabOptions _options = options.Value;
+    private readonly ILogger<GitLabService> _logger = logger;
 
     private static readonly JsonSerializerOptions JsonOpts = new()
     {
         PropertyNameCaseInsensitive = true
     };
-
-    public GitLabService(HttpClient http, IOptions<GitLabOptions> options, ILogger<GitLabService> logger)
-    {
-        _http = http;
-        _options = options.Value;
-        _logger = logger;
-    }
 
     public async Task<IEnumerable<RenovateMrDto>> GetRenovateMrsAsync(CancellationToken ct = default)
     {
@@ -88,7 +81,7 @@ public class GitLabService
         public string TargetBranch { get; set; } = "";
 
         [JsonPropertyName("merge_status")]
-        public string MergeStatus { get; set; } = "";
+        public string? MergeStatus { get; set; }
     }
 
     private sealed class GitLabAuthor
